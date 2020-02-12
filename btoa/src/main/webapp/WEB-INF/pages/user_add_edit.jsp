@@ -29,17 +29,17 @@
 				class="layui-input">
 		</div>
 	</div>
-	<c:if test="${empty user}">
-		<div class="layui-form-item">
+	
+		<div class="layui-form-item" id="passUser">
 			<label class="layui-form-label">用户密码</label>
 			<div class="layui-input-inline">
-				<input type="password" name="userPass" required
+				<input type="password" name="userPass" required 
 					lay-verify="required" placeholder="请输入密码" autocomplete="off"
 					class="layui-input">
 			</div>
 			<div class="layui-form-mid layui-word-aux"></div>
 		</div>
-	</c:if>
+	
 	<input type="hidden" id="rowId" value="${user.rowId}" name="rowId">
 	<div class="layui-form-item">
 		<label class="layui-form-label">用户等级</label>

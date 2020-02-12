@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.situ.btoa.commons.LayuiResult;
+import com.situ.btoa.role.service.RoleService;
 import com.situ.btoa.user.domain.User;
 import com.situ.btoa.user.service.UserService;
 
@@ -30,6 +31,8 @@ public class UserController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleService roleService ;
 
 //后台用户管理主页面
 	/*
@@ -67,54 +70,65 @@ public class UserController implements Serializable {
 	 * this.userService.doUserLock(rowId, isLock); }
 	 */
 	@GetMapping("/{page}/{limit}")
-	public LayuiResult doFind(@PathVariable Integer page,@PathVariable Integer limit,User user) {
+	public LayuiResult doFind(@PathVariable Integer page, @PathVariable Integer limit, User user) {
 		// 查询表中的所有数据
-		//Integer count = userService.getCount();
+		// Integer count = userService.getCount();
 		// 分页查询数据
-		//List<User> userList = userService.findAllUser();
+		// List<User> userList = userService.findAllUser();
 
-		return userService.findUserByPage(page,limit,user);
+		return userService.findUserByPage(page, limit, user);
 
 	}
 
 	@GetMapping("/goadd")
 	public ModelAndView goAdd(ModelAndView modelAndView) {
+		//modelAndView.addObject("roleList",roleService.findAllRole());
 		modelAndView.setViewName("user_add_edit");
 		return modelAndView;
 	}
 
 	@PostMapping
 	public Long doAddUser(User user) {
-		
+
 		return userService.addUser(user);
 
 	}
+
 	@DeleteMapping("/{rowId}")
 	public Long doDelete(@PathVariable Long rowId) {
 		return userService.doDelete(rowId);
 	}
+
 	@GetMapping("/get/{rowId}")
 	public User doGet(@PathVariable Long rowId) {
-		
-		
+
 		return userService.doGet(rowId);
 	}
+
 	@PutMapping
 	public Long doUpdata(User user) {
 		return userService.doUpdata(user);
 	}
+
 	@GetMapping("/checkUserCode")
 	public Integer doCheckUserByCode(String userCode) {
-		int num=0;
-		if(userService.checkByUserCode(userCode)!=null) {
-			num=1;
+		int num = 0;
+		if (userService.checkByUserCode(userCode) != null) {
+			num = 1;
 		}
-		return num ;
+		return num;
 	}
+
 	@GetMapping("/index")
 	public ModelAndView doIndex(ModelAndView modelAndView) {
-		modelAndView.setViewName("user-table");
-		return modelAndView ;
+		modelAndView.setViewName("index");
+		return modelAndView;
 	}
-	
+
+	@GetMapping
+	public ModelAndView goUserIndex(ModelAndView modelAndView) {
+		modelAndView.setViewName("user/user_index");
+		return modelAndView;
+	}
+
 }
